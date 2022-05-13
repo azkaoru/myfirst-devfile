@@ -178,7 +178,7 @@ components:
       endpoints:
         - exposure: public
           name: root
-          path: /jsp-counter/
+          path: /
           protocol: http
           targetPort: 8080
       memoryLimit: 1Gi
@@ -208,27 +208,6 @@ components:
         - name: PS1
           value: $(echo ${0})\\$
 
-  - name: postgres
-    container:
-      image: postgres
-      memoryLimit: 512Mi
-      endpoints:
-        - exposure: internal
-          name: db
-          protocol: tcp
-          targetPort: 5432
-      env:
-        - name: PGDATA # workaround not using volume: chmod 700 in entrypoint that may fail in some volume class ... It will be ephemeral unfortunately
-          value: /tmp/pgdata
-        - value: test
-          name: POSTGRES_USER
-        - value: test
-          name: POSTGRES_PASSWORD
-        - value: testdb
-          name: POSTGRES_DB
-      volumeMounts:
-        - name: postgresql-data
-          path: /var/lib/postgresql/data
 commands:
   - id: prepare-database
     exec:
