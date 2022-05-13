@@ -1,13 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
   name: jsp-counter
-projects:
-  -
-    name: eap512-example
-    source:
-      location: "https://github.com/azkaoru/jsp-counter.git"
-      type: git
-
 attributes:
   che-theia.eclipse.org/sidecar-policy: USE_DEV_CONTAINER
   che-editor.yaml: |
