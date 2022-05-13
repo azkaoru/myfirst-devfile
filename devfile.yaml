@@ -1,6 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
-  name: jsp-counter
+  name: myfirst-devfile
 attributes:
   che-theia.eclipse.org/sidecar-policy: USE_DEV_CONTAINER
   che-editor.yaml: |
@@ -212,11 +212,11 @@ commands:
   - id: prepare-database
     exec:
       component: mysql
-      workingDir: ${PROJECTS_ROOT}/jsp-counter
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       commandLine: |
-        /opt/rh/rh-mysql57/root/usr/bin/mysql -u root < ${PROJECTS_ROOT}/jsp-counter/src/main/resources/db/mysql/user.sql && \
-        /opt/rh/rh-mysql57/root/usr/bin/mysql -u root petclinic < ${PROJECTS_ROOT}/jsp-counter/src/main/resources/db/mysql/schema.sql && \
-        /opt/rh/rh-mysql57/root/usr/bin/mysql -u root petclinic < ${PROJECTS_ROOT}/jsp-counter/src/main/resources/db/mysql/data.sql && \
+        /opt/rh/rh-mysql57/root/usr/bin/mysql -u root < ${PROJECTS_ROOT}/myfirst-devfile/src/main/resources/db/mysql/user.sql && \
+        /opt/rh/rh-mysql57/root/usr/bin/mysql -u root petclinic < ${PROJECTS_ROOT}/myfirst-devfile/src/main/resources/db/mysql/schema.sql && \
+        /opt/rh/rh-mysql57/root/usr/bin/mysql -u root petclinic < ${PROJECTS_ROOT}/myfirst-devfile/src/main/resources/db/mysql/data.sql && \
         echo -e "\e[32mDone.\e[0m Database petclinic was configured"
       group:
         kind: run
@@ -225,7 +225,7 @@ commands:
   - id: build
     exec:
       component: tools
-      workingDir: ${PROJECTS_ROOT}/jsp-counter
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       commandLine: mvn clean install
       group:
         kind: build
@@ -237,7 +237,7 @@ commands:
       commandLine: >-
         cp target/*.war /opt/jboss5/jboss-as/server/default/deploy && 
           echo 'Archive was deployed, click on eap endpoint from Workspace view to open the application'
-      workingDir: ${PROJECTS_ROOT}/jsp-counter
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       group:
         kind: run
         isDefault: true
@@ -246,7 +246,7 @@ commands:
   - id: run-with-hsqldb
     exec:
       component: tools
-      workingDir: ${PROJECTS_ROOT}/jsp-counter
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       commandLine: >-
         java -jar target/*.jar
       group:
@@ -256,7 +256,7 @@ commands:
   - id: run-with-mysql
     exec:
       component: tools
-      workingDir: ${PROJECTS_ROOT}/jsp-counter
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       commandLine: |
         java -jar -Dspring-boot.run.profiles=mysql \
         -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 \
@@ -268,7 +268,7 @@ commands:
   - id: run-debug
     exec:
       component: tools
-      workingDir: ${PROJECTS_ROOT}/jsp-counter
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       commandLine: >-
         java -jar -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 target/*.jar
       group:
