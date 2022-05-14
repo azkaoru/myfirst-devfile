@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <!-- ===================================================================== -->
+  <!--                                                                       -->
+  <!--  JBoss Server Configuration                                           -->
+  <!--                                                                       -->
+  <!-- ===================================================================== -->
+
+  <!-- See http://www.jboss.org/community/wiki/Multiple1PC for information about local-tx-datasource -->
+  <!-- $Id: postgres-ds.xml 88948 2009-05-15 14:09:08Z jesper.pedersen $ -->
+  <!-- ==================================================================== -->
+  <!--  Datasource config for Postgres                                      -->
+  <!-- ==================================================================== -->
+
+
+<datasources>
+  <local-tx-datasource>
+    <jndi-name>jdbc/test/TestDS</jndi-name>
+    <use-java-context>false</use-java-context>
+    <connection-url>jdbc:postgresql://127.0.0.1:5432/testdb</connection-url>
+    <driver-class>org.postgresql.Driver</driver-class>
+    <user-name>test</user-name>
+    <password>test</password>
+    <min-pool-size>5</min-pool-size>
+    <max-pool-size>5</max-pool-size>
+    <idle-timeout-minutes>0</idle-timeout-minutes>
+    <check-valid-connection-sql>select 1</check-valid-connection-sql>
+    <metadata>
+       <type-mapping>PostgreSQL</type-mapping>
+    </metadata>
+    <prepared-statement-cache-size>10</prepared-statement-cache-size>
+  </local-tx-datasource>
+</datasources>
