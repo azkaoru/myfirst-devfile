@@ -231,29 +231,6 @@ components:
           path: /var/lib/postgresql/data
 
 commands:
-  - id: prepare-database
-    exec:
-      component: mysql
-      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
-      commandLine: |
-        /opt/rh/rh-mysql57/root/usr/bin/mysql -u root < ${PROJECTS_ROOT}/myfirst-devfile/src/main/resources/db/mysql/user.sql && \
-        /opt/rh/rh-mysql57/root/usr/bin/mysql -u root petclinic < ${PROJECTS_ROOT}/myfirst-devfile/src/main/resources/db/mysql/schema.sql && \
-        /opt/rh/rh-mysql57/root/usr/bin/mysql -u root petclinic < ${PROJECTS_ROOT}/myfirst-devfile/src/main/resources/db/mysql/data.sql && \
-        echo -e "\e[32mDone.\e[0m Database petclinic was configured"
-      group:
-        kind: run
-        isDefault: true
-
-  - id: prepare-postgres
-    exec:
-      component: postgres
-      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
-      commandLine: |
-        psql -U test -d testdb ${PROJECTS_ROOT}/myfirst-devfile/import.sql && \
-        echo -e "Database testdb  was configured"
-      group:
-        kind: run
-        isDefault: true
 
   - id: build
     exec:
@@ -275,6 +252,17 @@ commands:
         kind: run
         isDefault: true
 
+  - id: Configure JDBC Driver
+    exec:
+      component: eap512
+      commandLine: >-
+        cp postgresql-*.jar /opt/jboss5/jboss-as/common/lib &&
+          echo 'postgres jdbc driver was deployed'
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
+      group:
+        kind: run
+        isDefault: true
+
   - id: Configure DataSource
     exec:
       component: eap512
@@ -286,35 +274,25 @@ commands:
         kind: run
         isDefault: true
 
-  - id: Configure JDBC Driver
+  - id: Prepare Database
     exec:
-      component: eap512
-      commandLine: >-
-        cp postgresql-*jar.xml /opt/jboss5/jboss-as/common/lib &&
-          echo 'postgres jdbc driver was deployed'
-      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
-      group:
-        kind: run
-        isDefault: true
-
-  - id: run-with-hsqldb
-    exec:
-      component: tools
+      component: postgres
       workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       commandLine: >-
-        java -jar target/*.jar
-      group:
-        kind: run
-        isDefault: true
-
-  - id: run-with-mysql
-    exec:
-      component: tools
-      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
+        psql -U test -d testdb ${PROJECTS_ROOT}/myfirst-devfile/import.sql &&
+          echo 'Database testdb  was configured'
       commandLine: |
-        java -jar -Dspring-boot.run.profiles=mysql \
-        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 \
-        target/*.jar
+      group:
+        kind: run
+        isDefault: true
+
+  - id: psql
+    exec:
+      component: postgres
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
+      commandLine: >-
+        psql -U test -d testdb
+      commandLine: |
       group:
         kind: run
         isDefault: true
