@@ -233,29 +233,29 @@ commands:
         kind: run
         isDefault: true
 
-  - id: Configure JDBC Driver
+  - id: configure-jdbc
     exec:
       component: eap512
       commandLine: >-
-        cp postgresql-*.jar /opt/jboss5/jboss-as/common/lib &&
+        cp postgresql*.jar /opt/jboss5/jboss-as/common/lib &&
           echo 'postgres jdbc driver was deployed'
       workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       group:
         kind: run
         isDefault: true
 
-  - id: Configure DataSource
+  - id: configure-datasource
     exec:
       component: eap512
       commandLine: >-
-        cp *-ds.xml /opt/jboss5/jboss-as/server/default/deploy &&
+        cp *ds.xml /opt/jboss5/jboss-as/server/default/deploy &&
           echo 'ds-file was deployed'
       workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       group:
         kind: run
         isDefault: true
 
-  - id: Prepare Database
+  - id: prepare-database
     exec:
       component: postgres
       workingDir: ${PROJECTS_ROOT}/myfirst-devfile
@@ -287,4 +287,3 @@ commands:
       group:
         kind: run
         isDefault: true
-
