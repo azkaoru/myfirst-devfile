@@ -260,7 +260,7 @@ commands:
       component: postgres
       workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       commandLine: >-
-        psql -U test -d testdb ${PROJECTS_ROOT}/myfirst-devfile/import.sql &&
+        psql -U test -d testdb -f ${PROJECTS_ROOT}/myfirst-devfile/import.sql &&
           echo 'Database testdb  was configured'
       group:
         kind: run
