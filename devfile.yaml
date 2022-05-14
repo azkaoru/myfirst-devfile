@@ -229,6 +229,7 @@ components:
       volumeMounts:
         - name: postgresql-data
           path: /var/lib/postgresql/data
+
 commands:
   - id: prepare-database
     exec:
@@ -239,6 +240,17 @@ commands:
         /opt/rh/rh-mysql57/root/usr/bin/mysql -u root petclinic < ${PROJECTS_ROOT}/myfirst-devfile/src/main/resources/db/mysql/schema.sql && \
         /opt/rh/rh-mysql57/root/usr/bin/mysql -u root petclinic < ${PROJECTS_ROOT}/myfirst-devfile/src/main/resources/db/mysql/data.sql && \
         echo -e "\e[32mDone.\e[0m Database petclinic was configured"
+      group:
+        kind: run
+        isDefault: true
+
+  - id: prepare-postgres
+    exec:
+      component: postgres
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
+      commandLine: |
+        psql -U test -d testdb ${PROJECTS_ROOT}/myfirst-devfile/import.sql && \
+        echo -e "Database testdb  was configured"
       group:
         kind: run
         isDefault: true
@@ -263,6 +275,27 @@ commands:
         kind: run
         isDefault: true
 
+  - id: Configure DataSource
+    exec:
+      component: eap512
+      commandLine: >-
+        cp *-ds.xml /opt/jboss5/jboss-as/server/default/deploy &&
+          echo 'ds-file was deployed'
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
+      group:
+        kind: run
+        isDefault: true
+
+  - id: Configure JDBC Driver
+    exec:
+      component: eap512
+      commandLine: >-
+        cp postgresql-*jar.xml /opt/jboss5/jboss-as/common/lib &&
+          echo 'postgres jdbc driver was deployed'
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
+      group:
+        kind: run
+        isDefault: true
 
   - id: run-with-hsqldb
     exec:
