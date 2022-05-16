@@ -226,7 +226,7 @@ commands:
     exec:
       component: eap512
       commandLine: >-
-        cp target/*.war /opt/jboss5/jboss-as/server/default/deploy && 
+        cp target/*.war /opt/jboss5/jboss-as/server/prodcution/deploy && 
           echo 'Archive was deployed, click on eap endpoint from Workspace view to open the application'
       workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       group:
@@ -248,8 +248,19 @@ commands:
     exec:
       component: eap512
       commandLine: >-
-        cp *ds.xml /opt/jboss5/jboss-as/server/default/deploy &&
+        cp *ds.xml /opt/jboss5/jboss-as/server/prodcution/deploy &&
           echo 'ds-file was deployed'
+      workingDir: ${PROJECTS_ROOT}/myfirst-devfile
+      group:
+        kind: run
+        isDefault: true
+
+  - id: configure-messaging-destination
+    exec:
+      component: eap512
+      commandLine: >-
+        cp messaging-destinatio.xml /opt/jboss5/jboss-as/server/prodcution/deploy/messaging &&
+          echo 'messaging-destination was deployed'
       workingDir: ${PROJECTS_ROOT}/myfirst-devfile
       group:
         kind: run
