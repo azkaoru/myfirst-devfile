@@ -181,6 +181,9 @@ components:
           path: /jsp-counter/
           protocol: http
           targetPort: 8080
+      env:
+        - name: MYPROFILE
+          value: default
       memoryLimit: 1Gi
       mountSources: true
       sourceMapping: /projects
