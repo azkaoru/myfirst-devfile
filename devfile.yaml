@@ -183,7 +183,7 @@ components:
           targetPort: 8080
       env:
         - name: MYPROFILE
-          value: default
+          value: production
       memoryLimit: 1Gi
       mountSources: true
       sourceMapping: /projects
