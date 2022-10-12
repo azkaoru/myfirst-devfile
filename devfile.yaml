@@ -174,7 +174,7 @@ components:
 
   - name: eap512
     container:
-      image: '172.25.120.255:5001/dev-eap512'
+      image: 'registry.gitlab.com/ss-cloudnative/openshift/dev-eap512'
       endpoints:
         - exposure: public
           name: root
