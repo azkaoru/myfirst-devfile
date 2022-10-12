@@ -206,9 +206,6 @@ components:
           name: POSTGRES_PASSWORD
         - value: testdb
           name: POSTGRES_DB
-      volumeMounts:
-        - name: postgresql-data
-          path: /var/lib/postgresql/data
 
 commands:
 
